@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eBook Library</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Moul&family=Moulpali&family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3f7;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --header-font: 'Moul', cursive;
+            --model-font: 'Moulpali', cursive;
+            --body-font: 'Kantumruy Pro', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--body-font);
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 5px;
+        }
+
+        .language-toggle button {
+            background: none;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-family: var(--body-font);
+            font-weight: 600;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+
+        .language-toggle button.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo h1 {
+            font-family: var(--header-font);
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: var(--transition);
+            font-family: var(--body-font);
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1590&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-top: 70px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            max-width: 600px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h2 {
+            font-family: var(--header-font);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: block;
+            background: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-family: var(--body-font);
+            width: fit-content;
+            float: left;
+        }
+
+        .btn:hover {
+            background: #3da8d8;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-family: var(--header-font);
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-family: var(--model-font);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        /* Books Section */
+        .books {
+            padding: 5rem 0;
+            background: #f5f7fa;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .book-cover {
+            height: 350px;
+            overflow: hidden;
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .book-card:hover .book-cover img {
+            transform: scale(1.05);
+        }
+
+        .book-info {
+            padding: 1.5rem;
+        }
+
+        .book-info h3 {
+            font-family: var(--model-font);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+
+        .book-info .author {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .book-info .price {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: #f5f7fa;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 4rem;
+            color: rgba(0, 0, 0, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .testimonial-content {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            margin-bottom: 0.2rem;
+            font-family: var(--model-font);
+        }
+
+        .author-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-family: var(--header-font);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            font-family: var(--body-font);
+        }
+
+        .newsletter-form button {
+            padding: 15px 25px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: var(--body-font);
+        }
+
+        .newsletter-form button:hover {
+            background: #3da8d8;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            font-family: var(--header-font);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #aaa;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 0 15px;
+            }
+
+            nav {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 70px);
+                background: var(--primary-color);
+                transition: var(--transition);
+                z-index: 99;
+            }
+
+            nav.active {
+                left: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 2rem;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-form input {
+                border-radius: 30px;
+                margin-bottom: 10px;
+            }
+
+            .newsletter-form button {
+                border-radius: 30px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Khmer Language Style */
+        body.khmer {
+            font-family: 'Kantumruy Pro', sans-serif;
+        }
+
+        body.khmer .hero h2,
+        body.khmer .section-title,
+        body.khmer .footer-column h3,
+        body.khmer .feature-card h3,
+        body.khmer .book-info h3,
+        body.khmer .testimonial-author h4 {
+            font-family: 'Moul', cursive;
+        }
+
+        body.khmer .newsletter h2 {
+            font-family: 'Moul', cursive;
+        }
+
+        .khmer-content {
+            display: none;
+        }
+
+        body.khmer .english-content {
+            display: none;
+        }
+
+        body.khmer .khmer-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="enBtn" class="active">English</button>
+        <button id="khBtn">ភាសាខ្មែរ</button>
+    </div>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" alt="eBook Library Logo">
+                    <h1 class="english-content">eBook Library</h1>
+                    <h1 class="khmer-content">បណ្ណាល័យ eBook</h1>
+                </div>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="#home" class="english-content">Home</a><a href="#home" class="khmer-content">ទំព័រដើម</a></li>
+                        <li><a href="#features" class="english-content">Features</a><a href="#features" class="khmer-content">លក្ខណៈពិសេស</a></li>
+                        <li><a href="#books" class="english-content">Books</a><a href="#books" class="khmer-content">សៀវភៅ</a></li>
+                        <li><a href="#testimonials" class="english-content">Testimonials</a><a href="#testimonials" class="khmer-content">សេចក្តីអំណាច</a></li>
+                        <li><a href="#contact" class="english-content">Contact</a><a href="#contact" class="khmer-content">ទំនាក់ទំនង</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="english-content">Discover Your Next Favorite Book</h2>
+                <h2 class="khmer-content">រកឃើញសៀវភៅដែលអ្នកចូលចិត្តបន្ទាប់របស់អ្នក</h2>
+                <p class="english-content">Explore thousands of eBooks across all genres. Read anytime, anywhere on your favorite devices.</p>
+                <p class="khmer-content">ស្វែងរករាប់ពាន់នាក់នៃ eBooks កាត់ប្រភេទទាំងអស់។ អានគ្រប់ពេលវេលា គ្រប់ទីកន្លែងលើឧបករណ៍ដែលអ្នកចូលចិត្ត។</p>
+                <a href="#books" class="btn english-content">Browse Books</a>
+                <a href="#books" class="btn khmer-content">រាវរកសៀវភៅ</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title english-content">Why Choose Us</h2>
+            <h2 class="section-title khmer-content">ហេតុអ្វីជ្រើសរើសយើង</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="english-content">Extensive Collection</h3>
+                    <h3 class="khmer-content">ការប្រមូលផ្តុំយ៉ាងច្រើន</h3>
+                    <p class="english-content">Access to thousands of eBooks across all genres from best-selling authors.</p>
+                    <p class="khmer-content">ការចូលប្រើរាប់ពាន់នាក់នៃ eBooks កាត់ប្រភេទទាំងអស់ពីអ្នកនិពន្ធលក់ដាច់បំផុត។</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="english-content">Read Anywhere</h3>
+                    <h3 class="khmer-content">អាននៅកន្លែងណាក៏បាន</h3>
+                    <p class="english-content">Read on your phone, tablet, or computer. Sync your progress across devices.</p>
+                    <p class="khmer-content">អានលើទូរស័ព្ទដៃ ថេប្លេត ឬកុំព្យូទ័រ។ សមកាលកម្មវឌ្ឍនភាពរបស់អ្នកកាត់ឧបករណ៍។</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h3 class="english-content">Affordable Prices</h3>
+                    <h3 class="khmer-content">តម្លៃសមរម្យ</h3>
+                    <p class="english-content">Get the best deals on eBooks with our regular discounts and promotions.</p>
+                    <p class="khmer-content">ទទួលបានកិច្ចព្រមព្រៀងល្អបំផុតលើ eBooks ជាមួយនឹងការបញ្ចុះតម្លៃ និងការផ្សព្វផ្សាយជាប្រចាំរបស់យើង។</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Books Section -->
+    <section class="books" id="books">
+        <div class="container">
+            <h2 class="section-title english-content">Popular Books</h2>
+            <h2 class="section-title khmer-content">សៀវភៅពេញនិយម</h2>
+            <div class="books-grid">
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://m.media-amazon.com/images/I/71aLultW5EL._AC_UF1000,1000_QL80_.jpg" alt="Book Cover">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="english-content">The Silent Patient</h3>
+                        <h3 class="khmer-content">អ្នកជំងឺស្ងាត់</h3>
+                        <p class="author english-content">by Alex Michaelides</p>
+                        <p class="author khmer-content">ដោយ Alex Michaelides</p>
+                        <p class="price">$12.99</p>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://m.media-amazon.com/images/I/91Q5dCjc2KL._AC_UF1000,1000_QL80_.jpg" alt="Book Cover">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="english-content">Where the Crawdads Sing</h3>
+                        <h3 class="khmer-content">កន្លែងដែល Crawdads ច្រៀង</h3>
+                        <p class="author english-content">by Delia Owens</p>
+                        <p class="author khmer-content">ដោយ Delia Owens</p>
+                        <p class="price">$14.99</p>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://m.media-amazon.com/images/I/81bsw6fnUiL._AC_UF1000,1000_QL80_.jpg" alt="Book Cover">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="english-content">Atomic Habits</h3>
+                        <h3 class="khmer-content">អត្តធាតុទម្លាប់</h3>
+                        <p class="author english-content">by James Clear</p>
+                        <p class="author khmer-content">ដោយ James Clear</p>
+                        <p class="price">$11.99</p>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://m.media-amazon.com/images/I/71X1p4TGlxL._AC_UF1000,1000_QL80_.jpg" alt="Book Cover">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="english-content">Educated</h3>
+                        <h3 class="khmer-content">ការអប់រំ</h3>
+                        <p class="author english-content">by Tara Westover</p>
+                        <p class="author khmer-content">ដោយ Tara Westover</p>
+                        <p class="price">$13.99</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title english-content">What Readers Say</h2>
+            <h2 class="section-title khmer-content">អ្វីដែលអ្នកអាននិយាយ</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p class="english-content">This is the best eBook platform I've used. The selection is incredible and the reading experience is seamless across all my devices.</p>
+                        <p class="khmer-content">នេះគឺជាវេទិកា eBook ដ៏ល្អបំផុតដែលខ្ញុំបានប្រើ។ ការជ្រើសរើសគឺអស្ចារ្យ ហើយបទពិសោធន៍អានគឺរលូននៅទូទាំងឧបករណ៍ទាំងអស់របស់ខ្ញុំ។</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="User">
+                        <div class="author-info">
+                            <h4>Sophia Chen</h4>
+                            <p class="english-content">Avid Reader</p>
+                            <p class="khmer-content">អ្នកអានដ៏ឧស្សាហ៍</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p class="english-content">I love how affordable the books are compared to physical copies. The quality is just as good and I can carry my whole library in my pocket!</p>
+                        <p class="khmer-content">ខ្ញុំចូលចិត្តរបៀបដែលសៀវភៅមានតម្លៃសមរម្យបើប្រៀបធៀបនឹងច្បាប់ថតចម្លងរូបី។ គុណភាពគឺល្អដូចគ្នា ហើយខ្ញុំអាចដាក់បណ្ណាល័យទាំងមូលរបស់ខ្ញុំនៅក្នុងហោប៉ៅរបស់ខ្ញុំ!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="User">
+                        <div class="author-info">
+                            <h4>David Johnson</h4>
+                            <p class="english-content">Book Enthusiast</p>
+                            <p class="khmer-content">អ្នកចូលចិត្តសៀវភៅ</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p class="english-content">The customer service is outstanding. They helped me recover my account quickly when I had issues. Highly recommend!</p>
+                        <p class="khmer-content">សេវាកម្មអតិថិជនគឺល្អឥតខ្ចោះ។ ពួកគេបានជួយខ្ញុំជាមួយនឹងការសង្គ្រោះគណនីរបស់ខ្ញុំយ៉ាងឆាប់រហ័សនៅពេលខ្ញុំមានបញ្ហា។ ផ្តល់អនុសាសន៍ខ្លាំង!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User">
+                        <div class="author-info">
+                            <h4>Maria Garcia</h4>
+                            <p class="english-content">Loyal Customer</p>
+                            <p class="khmer-content">អតិថិជនស្មោះស្ម័គ្រ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter" id="contact">
+        <div class="container">
+            <h2 class="english-content">Stay Updated</h2>
+            <h2 class="khmer-content">ជាប់ទាក់ទង</h2>
+            <p class="english-content">Subscribe to our newsletter for the latest book releases and exclusive offers.</p>
+            <p class="khmer-content">ជាវព្រឹត្តិប័ត្ររបស់យើងសម្រាប់ការចេញផ្សាយសៀវភៅថ្មីៗ និងការផ្តល់ជូនពិសេស។</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" class="english-content" required>
+                <input type="email" placeholder="អាសយដ្ឋានអ៊ីមែលរបស់អ្នក" class="khmer-content" required>
+                <button type="submit" class="english-content">Subscribe</button>
+                <button type="submit" class="khmer-content">ជាវ</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3 class="english-content">Quick Links</h3>
+                    <h3 class="khmer-content">តំណភ្ជាប់រហ័ស</h3>
+                    <ul>
+                        <li><a href="#home" class="english-content">Home</a><a href="#home" class="khmer-content">ទំព័រដើម</a></li>
+                        <li><a href="#features" class="english-content">Features</a><a href="#features" class="khmer-content">លក្ខណៈពិសេស</a></li>
+                        <li><a href="#books" class="english-content">Books</a><a href="#books" class="khmer-content">សៀវភៅ</a></li>
+                        <li><a href="#testimonials" class="english-content">Testimonials</a><a href="#testimonials" class="khmer-content">សេចក្តីអំណាច</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3 class="english-content">Categories</h3>
+                    <h3 class="khmer-content">ប្រភេទ</h3>
+                    <ul>
+                        <li><a href="#" class="english-content">Fiction</a><a href="#" class="khmer-content">ប្រលោមលោក</a></li>
+                        <li><a href="#" class="english-content">Non-Fiction</a><a href="#" class="khmer-content">មិនមែនប្រលោមលោក</a></li>
+                        <li><a href="#" class="english-content">Science Fiction</a><a href="#" class="khmer-content">វិទ្យាសាស្ត្រប្រលោមលោក</a></li>
+                        <li><a href="#" class="english-content">Biography</a><a href="#" class="khmer-content">ជីវប្រវត្តិ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3 class="english-content">Support</h3>
+                    <h3 class="khmer-content">ជំនួយ</h3>
+                    <ul>
+                        <li><a href="#" class="english-content">Help Center</a><a href="#" class="khmer-content">មជ្ឈមណ្ឌលជំនួយ</a></li>
+                        <li><a href="#" class="english-content">Contact Us</a><a href="#" class="khmer-content">ទំនាក់ទំនងយើង</a></li>
+                        <li><a href="#" class="english-content">FAQ</a><a href="#" class="khmer-content">សំណួរដែលសួរញឹកញាប់</a></li>
+                        <li><a href="#" class="english-content">Privacy Policy</a><a href="#" class="khmer-content">គោលការណ៍ឯកជនភាព</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3 class="english-content">Connect With Us</h3>
+                    <h3 class="khmer-content">តភ្ជាប់ជាមួយយើង</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="english-content">2025 - All rights reserved. Provide by Mr. Phekdey PHORN</p>
+                <p class="khmer-content">2025 - រក្សារ​សិទ្ធិ​គ្រប់​យ៉ាង ដោយលោក ផន ភក្ដី។</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language Toggle
+        const enBtn = document.getElementById('enBtn');
+        const khBtn = document.getElementById('khBtn');
+        
+        enBtn.addEventListener('click', () => {
+            document.body.classList.remove('khmer');
+            enBtn.classList.add('active');
+            khBtn.classList.remove('active');
+        });
+        
+        khBtn.addEventListener('click', () => {
+            document.body.classList.add('khmer');
+            khBtn.classList.add('active');
+            enBtn.classList.remove('active');
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close mobile menu when clicking on a link
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (mainNav.classList.contains('active')) {
+                    mainNav.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+        });
+
+        // Back to Top Button
+        const backToTopBtn = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.feature-card, .book-card, .testimonial-card');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Set initial state for animation
+        document.querySelectorAll('.feature-card, .book-card, .testimonial-card').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
+</html>
